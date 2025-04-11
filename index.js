@@ -9,29 +9,28 @@ u * A basic model to build pon before implementing a minimal Redux design to the
 /*Enforce strict rules*/
 "use strict";
 
-//Store object -  Store Redux
-const store = 
-{
-    value: 0, //The initial State
+// Minimal Redux-like store using closures
+const createStore = function () {
+    let value = 0; // Private state
 
-    //Store methods - Actions Redux
-    getState: function(){ return this.value},
-    
-    //
-    dispatchAdd: function()
-    {
-        this.value += 1;
-    },
-    dispatchSubtract: function()
-    {
-        this.value -= 1;
-    },
-    reset: function()
-    {
-        this.value = 0;
-    }
+    return {
+        getState: () => value,
 
-}
+        dispatchAdd: () => {
+            value += 1;
+        },
+
+        dispatchSubtract: () => {
+            value -= 1;
+        },
+
+        reset: () => {
+            value = 0;
+        }
+    };
+};
+
+const store = createStore();
 
 //const {getState, dispatchSubtract, dispatchAdd, reset} = store;
 const elements = 
