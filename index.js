@@ -22,7 +22,14 @@ function reducer(state, action) {
     }
   }
 
-//2. Create a store factory that uses a reducer
+//Action Creators
+const actions = {
+    add: () => ({ type: 'ADD' }),
+    subtract: () => ({ type: 'SUBTRACT' }),
+    reset: () => ({ type: 'RESET' })
+  };
+
+//3. Create a store factory that uses a reducer
 const createStore = function (reducer) {
     let state = 0;
 
@@ -58,21 +65,21 @@ function subscriber(elements,store)
     //Add value 1 to the store
     elements.elBtnIncrement.addEventListener('click', () => 
         {
-            store.dispatch({ type: 'ADD' });
+            store.dispatch(actions.add());
             elements.elCounterText.textContent = store.getState();
         });
 
     //Substract value 1 from the store
     elements.elBtnDecrement.addEventListener('click', () => 
         {
-            store.dispatch({ type: 'SUBTRACT' });
+            store.dispatch(actions.subtract());
             elements.elCounterText.textContent = store.getState();
         });
 
     //Reset value to 0 inside the store
     elements.elBtnResetCounter.addEventListener('click', () => 
         {
-            store.dispatch({ type: 'RESET' });
+            store.dispatch(actions.reset());
             elements.elCounterText.textContent = store.getState();
         });
 }
@@ -94,16 +101,16 @@ console.log('\nTally App User Stories\n------------------------------------\n');
 console.log('Scenerio 1: ' + store.getState()); 
 
 //Scenerio 2: Incrementing the counter
-store.dispatch({ type: 'ADD' });
-store.dispatch({ type: 'ADD' });
+store.dispatch(actions.add());
+store.dispatch(actions.add());
 console.log('Scenerio 2: ' + store.getState());
 
 
 //Scenario 3: Decrementing the counter 
-store.dispatch({ type: 'SUBTRACT' });
+store.dispatch(actions.subtract());
 console.log('scenario 3: ' + store.getState());
 
 //Scenario 4: Resetting the counter 
-store.dispatch({ type: 'RESET' });
+store.dispatch(actions.reset());
 console.log('scenario 4: ' + store.getState());
 
