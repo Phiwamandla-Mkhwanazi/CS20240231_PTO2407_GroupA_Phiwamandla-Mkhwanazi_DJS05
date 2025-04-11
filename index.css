@@ -12,11 +12,11 @@ main
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-color: green;
 }
 section
 {
     display: grid;
+    background-color: grey;
     border: 0;
     border-radius: 1em;
     padding: 2em;
