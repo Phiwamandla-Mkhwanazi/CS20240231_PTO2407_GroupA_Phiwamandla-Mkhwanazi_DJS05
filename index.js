@@ -1,121 +1,98 @@
 /**
- * Minimal Approach to The solution with custom UI.
- * A basic model to build upon before implementing a minimal Redux design to the solution .
- * The challenge requires a minimal approach and hence no redux library will be used.
- * The aim is to build upon existing knowledge and add an extra layer
- * */
+ * Minimal custom Redux-like implementation with a basic UI.
+ * This is a foundational model to build upon without using external libraries.
+ * The goal is to enhance core understanding before layering more complex designs.
+ */
 
-/*Enforce strict rules*/
 "use strict";
 
-/*------------------------------------Minimal Redux Design------------------------------------------------*/
-//1. Reducer function
+/*------------------------------------ Redux-Like Core --------------------------------------------------*/
+
+// Reducer: handles state transitions
 function reducer(state, action) {
-    switch (action.type) {
-      case 'ADD':
-        return state + 1;
-      case 'SUBTRACT':
-        return state - 1;
-      case 'RESET':
-        return 0;
-      default:
-        return state;
-    }
+  switch (action.type) {
+    case 'ADD':
+      return state + 1;
+    case 'SUBTRACT':
+      return state - 1;
+    case 'RESET':
+      return 0;
+    default:
+      return state;
   }
+}
 
-//Action Creators
+// Action Creators
 const actions = {
-    add: () => ({ type: 'ADD' }),
-    subtract: () => ({ type: 'SUBTRACT' }),
-    reset: () => ({ type: 'RESET' })
-  };
-
-//3. Create a store factory that uses a reducer
-const createStore = function (reducer) {
-    let state = 0;
-
-    return {
-        // Return the current state
-        getState: () => state,
-    
-        // Accept an action object and update the state using the reducer
-        dispatch: action => {
-          state = reducer(state, action);
-        }
-      };
+  add: () => ({ type: 'ADD' }),
+  subtract: () => ({ type: 'SUBTRACT' }),
+  reset: () => ({ type: 'RESET' }),
 };
 
-// Create store
+// Store Factory
+const createStore = function (reducer) {
+  let state = 0;
+  const listeners = []; // Stores all subscriber callbacks (e.g., UI updates)
+
+  return {
+    getState: () => state,
+
+    dispatch: (action) => {
+      state = reducer(state, action);
+      listeners.forEach(listener => listener()); // Notify all subscribers
+    },
+
+    subscribe: (listener) => listeners.push(listener) // Register subscriber
+  };
+};
+
+// Initialize Store
 const store = createStore(reducer);
 
-
-/*----------------------------User Stories----------------------------------- */
+/*------------------------------------ User Stories (Test Scenarios) ------------------------------------*/
 
 console.log('\nTally App User Stories\n------------------------------------\n');
 
-//Scenerio 1: Initial State Verification
-console.log('Scenerio 1: ' + store.getState()); 
+console.log('Scenario 1 :', store.getState());
 
-//Scenerio 2: Incrementing the counter
 store.dispatch(actions.add());
 store.dispatch(actions.add());
-console.log('Scenerio 2: ' + store.getState());
+console.log('Scenario 2 :', store.getState());
 
-
-//Scenario 3: Decrementing the counter 
 store.dispatch(actions.subtract());
-console.log('scenario 3: ' + store.getState());
+console.log('Scenario 3 :', store.getState());
 
-//Scenario 4: Resetting the counter 
 store.dispatch(actions.reset());
-console.log('scenario 4: ' + store.getState());
+console.log('Scenario 4 :', store.getState());
 
+/*---------------------------------------- UI Layer -----------------------------------------------------*/
 
+// DOM Elements
+const elements = {
+  elCounterText: document.querySelector('span'),
+  elBtnIncrement: document.getElementById('btn-increment'),
+  elBtnDecrement: document.getElementById('btn-decrement'),
+  elBtnResetCounter: document.getElementById('btn-reset'),
+};
 
-
-/*------------------------------------Custom UI--------------------------------------------------------*/
-//3. DOM Elements
-const elements = 
-{
-    elCounterText: document.querySelector('span'),
-    elBtnIncrement: document.getElementById('btn-increment'),
-    elBtnDecrement: document.getElementById('btn-decrement'),
-    elBtnResetCounter: document.getElementById('btn-reset')
+// UI Dispatch Binding
+function subscriber(elements, store) {
+  elements.elBtnIncrement.addEventListener('click', () => store.dispatch(actions.add()));
+  elements.elBtnDecrement.addEventListener('click', () => store.dispatch(actions.subtract()));
+  elements.elBtnResetCounter.addEventListener('click', () => store.dispatch(actions.reset()));
 }
 
+/*---------------------------------- Main Execution------------------------------------------------------*/
 
-//4. Subscriber that wires up UI with store
-function subscriber(elements,store)
-{
+document.addEventListener('DOMContentLoaded', () => {
+  // Wire up UI
+  subscriber(elements, store);
 
-    //Add value 1 to the store
-    elements.elBtnIncrement.addEventListener('click', () => 
-        {
-            store.dispatch(actions.add());
-            elements.elCounterText.textContent = store.getState();
-        });
+  // Subscribe to store updates and render state to DOM
+  store.subscribe(() => {
+    elements.elCounterText.textContent = store.getState();
+  });
 
-    //Substract value 1 from the store
-    elements.elBtnDecrement.addEventListener('click', () => 
-        {
-            store.dispatch(actions.subtract());
-            elements.elCounterText.textContent = store.getState();
-        });
-
-    //Reset value to 0 inside the store
-    elements.elBtnResetCounter.addEventListener('click', () => 
-        {
-            store.dispatch(actions.reset());
-            elements.elCounterText.textContent = store.getState();
-        });
-}
-
-
-//5. Load program execution after DOM content has loaded
-document.addEventListener('DOMContentLoaded', () => 
-    {
-        subscriber(elements,store);
-        elements.elCounterText.textContent = store.getState();
-    });
-
-   
+  // Initial render
+  elements.elCounterText.textContent = store.getState();
+});
