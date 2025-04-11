@@ -1,7 +1,6 @@
 /**
  * Minimal Approach to The solution with custom UI.
- * This involves using objects and eventlisteners to get a grasp of state management.
-u * A basic model to build pon before implementing a minimal Redux design to the solution .
+ * A basic model to build upon before implementing a minimal Redux design to the solution .
  * The challenge requires a minimal approach and hence no redux library will be used.
  * The aim is to build upon existing knowledge and add an extra layer
  * */
@@ -9,30 +8,40 @@ u * A basic model to build pon before implementing a minimal Redux design to the
 /*Enforce strict rules*/
 "use strict";
 
-// Minimal Redux-like store using closures
-const createStore = function () {
-    let value = 0; // Private state
+//1. Reducer function
+function reducer(state, action) {
+    switch (action.type) {
+      case 'ADD':
+        return state + 1;
+      case 'SUBTRACT':
+        return state - 1;
+      case 'RESET':
+        return 0;
+      default:
+        return state;
+    }
+  }
+
+//2. Create a store factory that uses a reducer
+const createStore = function (reducer) {
+    let state = 0;
 
     return {
-        getState: () => value,
-
-        dispatchAdd: () => {
-            value += 1;
-        },
-
-        dispatchSubtract: () => {
-            value -= 1;
-        },
-
-        reset: () => {
-            value = 0;
+        // Return the current state
+        getState: () => state,
+    
+        // Accept an action object and update the state using the reducer
+        dispatch: action => {
+          state = reducer(state, action);
         }
-    };
+      };
 };
 
-const store = createStore();
+// Create store
+const store = createStore(reducer);
 
-//const {getState, dispatchSubtract, dispatchAdd, reset} = store;
+
+//3. DOM Elements
 const elements = 
 {
     elCounterText: document.querySelector('span'),
@@ -40,46 +49,44 @@ const elements =
     elBtnDecrement: document.getElementById('btn-decrement'),
     elBtnResetCounter: document.getElementById('btn-reset')
 }
-//const {elCounterText, elBtnIncrement, elBtnDecrement, elBtnResetCounter} = elements
 
-//Subscribes - Actions in Redux
+
+//4. Subscriber that wires up UI with store
 function subscriber(elements,store)
 {
 
     //Add value 1 to the store
     elements.elBtnIncrement.addEventListener('click', () => 
         {
-            store.dispatchAdd();
+            store.dispatch({ type: 'ADD' });
             elements.elCounterText.textContent = store.getState();
         });
 
     //Substract value 1 from the store
     elements.elBtnDecrement.addEventListener('click', () => 
         {
-            store.dispatchSubtract();
+            store.dispatch({ type: 'SUBTRACT' });
             elements.elCounterText.textContent = store.getState();
         });
 
     //Reset value to 0 inside the store
     elements.elBtnResetCounter.addEventListener('click', () => 
         {
-            store.reset();
+            store.dispatch({ type: 'RESET' });
             elements.elCounterText.textContent = store.getState();
         });
 }
-//Load Program Execution
+
+
+//5. Load program execution after DOM content has loaded
 document.addEventListener('DOMContentLoaded', () => 
     {
-        //The subscriber are being used to manipulates events in our store through eventlisteners
         subscriber(elements,store);
         elements.elCounterText.textContent = store.getState();
     });
 
    
 /*----------------------------User Stories----------------------------------- */
-/**
- * Program solution using objects and functions to retain state although not reliable
- */
 
 console.log('\nTally App User Stories\n------------------------------------\n');
 
@@ -87,16 +94,16 @@ console.log('\nTally App User Stories\n------------------------------------\n');
 console.log('Scenerio 1: ' + store.getState()); 
 
 //Scenerio 2: Incrementing the counter
-store.dispatchAdd();
-store.dispatchAdd();
+store.dispatch({ type: 'ADD' });
+store.dispatch({ type: 'ADD' });
 console.log('Scenerio 2: ' + store.getState());
 
 
 //Scenario 3: Decrementing the counter 
-store.dispatchSubtract();
+store.dispatch({ type: 'SUBTRACT' });
 console.log('scenario 3: ' + store.getState());
 
 //Scenario 4: Resetting the counter 
-store.reset();
+store.dispatch({ type: 'RESET' });
 console.log('scenario 4: ' + store.getState());
 
