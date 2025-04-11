@@ -51,19 +51,26 @@ const store = createStore(reducer);
 
 /*------------------------------------ User Stories (Test Scenarios) ------------------------------------*/
 
-console.log('\nTally App User Stories\n------------------------------------\n');
+// Counter for tracking which scenario we're in (for demonstration/logging purposes)
+let scenarioCount = 1;
 
-console.log('Scenario 1 :', store.getState());
+// Subscriber to log state changes after each action dispatch (used in test scenarios)
+store.subscribe(() => {
+  console.log(`Scenario ${scenarioCount++}:`, store.getState());
+});
 
-store.dispatch(actions.add());
-store.dispatch(actions.add());
-console.log('Scenario 2 :', store.getState());
+// === The user story simulations using dispatch ===
+// Simulates pressing "Add" once
+store.dispatch(actions.add());     // Scenario 1: Expect counter to be 1
 
-store.dispatch(actions.subtract());
-console.log('Scenario 3 :', store.getState());
+// Simulates pressing "Add" again
+store.dispatch(actions.add());     // Scenario 2: Expect counter to be 2
 
-store.dispatch(actions.reset());
-console.log('Scenario 4 :', store.getState());
+// Simulates pressing "Subtract"
+store.dispatch(actions.subtract()); // Scenario 3: Expect counter to be 1
+
+// Simulates pressing "Reset"
+store.dispatch(actions.reset());   // Scenario 4: Expect counter to be 0
 
 /*---------------------------------------- UI Layer -----------------------------------------------------*/
 
