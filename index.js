@@ -41,8 +41,14 @@ const createStore = function (reducer) {
       state = reducer(state, action);
       listeners.forEach(listener => listener()); // Notify all subscribers
     },
-
-    subscribe: (listener) => listeners.push(listener) // Register subscriber
+    
+    // Register subscriber
+    subscribe: (listener) => {
+        listeners.push(listener);
+        return () => {
+            const index = listeners.indexOf(listener);
+            if (index > -1) listeners.splice(index, 1);
+          }} 
   };
 };
 
