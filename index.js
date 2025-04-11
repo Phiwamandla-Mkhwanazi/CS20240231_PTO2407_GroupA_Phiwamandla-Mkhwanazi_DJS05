@@ -80,13 +80,16 @@ store.dispatch(actions.reset());   // Scenario 4: Expect counter to be 0
 
 /*---------------------------------------- UI Layer -----------------------------------------------------*/
 
-// DOM Elements
-const elements = {
-  elCounterText: document.querySelector('span'),
-  elBtnIncrement: document.getElementById('btn-increment'),
-  elBtnDecrement: document.getElementById('btn-decrement'),
-  elBtnResetCounter: document.getElementById('btn-reset'),
-};
+let elements = {};
+
+if (typeof document !== 'undefined') {
+  elements = {
+    elCounterText: document.querySelector('span'),
+    elBtnIncrement: document.getElementById('btn-increment'),
+    elBtnDecrement: document.getElementById('btn-decrement'),
+    elBtnResetCounter: document.getElementById('btn-reset'),
+  };
+}
 
 // UI Dispatch Binding
 function subscriber(elements, store) {
@@ -97,15 +100,21 @@ function subscriber(elements, store) {
 
 /*---------------------------------- Main Execution------------------------------------------------------*/
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Wire up UI
-  subscriber(elements, store);
-
-  // Subscribe to store updates and render state to DOM
-  store.subscribe(() => {
-    elements.elCounterText.textContent = store.getState();
-  });
-
-  // Initial render
-  elements.elCounterText.textContent = store.getState();
-});
+if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+      // Wire up UI
+      subscriber(elements, store);
+  
+      // Subscribe to store updates and render state to DOM
+      store.subscribe(() => {
+        if (elements.elCounterText) {
+          elements.elCounterText.textContent = store.getState();
+        }
+      });
+  
+      // Initial render
+      if (elements.elCounterText) {
+        elements.elCounterText.textContent = store.getState();
+      }
+    });
+  }
