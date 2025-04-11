@@ -60,10 +60,18 @@ const store = createStore(reducer);
 // Counter for tracking which scenario we're in (for demonstration/logging purposes)
 let scenarioCount = 1;
 
+// Log initial state as Scenario 1
+console.log(`Scenario 1:`, store.getState());
 // Subscriber to log state changes after each action dispatch (used in test scenarios)
 store.subscribe(() => {
-  console.log(`Scenario ${scenarioCount++}:`, store.getState());
-});
+    if (scenarioCount === 1) {
+      // For Scenario 2,Simulates pressing "Add" once but will not log.
+      scenarioCount++
+    } else {
+      // For all subsequent scenarios, log with the scenario count
+      console.log(`Scenario ${scenarioCount++}:`, store.getState());
+    }
+  });
 
 // === The user story simulations using dispatch ===
 // Simulates pressing "Add" once
