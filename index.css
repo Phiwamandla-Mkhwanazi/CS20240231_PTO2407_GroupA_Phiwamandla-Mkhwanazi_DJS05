@@ -1,0 +1,50 @@
+body
+{
+    margin: 0;
+    height: 0;
+}
+
+main
+{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: green;
+}
+section
+{
+    display: grid;
+    border: 0;
+    border-radius: 1em;
+    padding: 2em;
+    box-shadow: 4px 4px 4px 4px lightgray;
+    
+}
+h1
+{
+    color: white;
+    font-size: x-large;
+
+}
+div
+{
+    display: flex;
+    justify-content: center;
+    padding: .5em;
+    gap:1em;
+}
+button
+{
+    color:green;
+    background-color: lightgrey;
+    font-weight: bold;
+    margin: 1em;
+    height: 3em;
+    border-radius: 10em;
+    border:  0;
+    box-shadow: 4px 4px 4px black;
+}
+
