@@ -8,6 +8,7 @@
 /*Enforce strict rules*/
 "use strict";
 
+/*------------------------------------Minimal Redux Design------------------------------------------------*/
 //1. Reducer function
 function reducer(state, action) {
     switch (action.type) {
@@ -48,6 +49,31 @@ const createStore = function (reducer) {
 const store = createStore(reducer);
 
 
+/*----------------------------User Stories----------------------------------- */
+
+console.log('\nTally App User Stories\n------------------------------------\n');
+
+//Scenerio 1: Initial State Verification
+console.log('Scenerio 1: ' + store.getState()); 
+
+//Scenerio 2: Incrementing the counter
+store.dispatch(actions.add());
+store.dispatch(actions.add());
+console.log('Scenerio 2: ' + store.getState());
+
+
+//Scenario 3: Decrementing the counter 
+store.dispatch(actions.subtract());
+console.log('scenario 3: ' + store.getState());
+
+//Scenario 4: Resetting the counter 
+store.dispatch(actions.reset());
+console.log('scenario 4: ' + store.getState());
+
+
+
+
+/*------------------------------------Custom UI--------------------------------------------------------*/
 //3. DOM Elements
 const elements = 
 {
@@ -93,24 +119,3 @@ document.addEventListener('DOMContentLoaded', () =>
     });
 
    
-/*----------------------------User Stories----------------------------------- */
-
-console.log('\nTally App User Stories\n------------------------------------\n');
-
-//Scenerio 1: Initial State Verification
-console.log('Scenerio 1: ' + store.getState()); 
-
-//Scenerio 2: Incrementing the counter
-store.dispatch(actions.add());
-store.dispatch(actions.add());
-console.log('Scenerio 2: ' + store.getState());
-
-
-//Scenario 3: Decrementing the counter 
-store.dispatch(actions.subtract());
-console.log('scenario 3: ' + store.getState());
-
-//Scenario 4: Resetting the counter 
-store.dispatch(actions.reset());
-console.log('scenario 4: ' + store.getState());
-
