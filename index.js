@@ -4,6 +4,10 @@
  * The goal is to enhance core understanding before layering more complex designs.
  */
 
+
+//Imports
+import reducer from './reducer.js';
+
 "use strict";
 
 // Initialize Store

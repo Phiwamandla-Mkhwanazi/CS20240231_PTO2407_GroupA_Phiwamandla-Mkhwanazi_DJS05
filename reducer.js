@@ -1,5 +1,5 @@
 // Reducer: handles state transitions
-function reducer(state, action) {
+export default function reducer(state, action) {
     switch (action.type) {
       case 'ADD':
         return state + 1;
