@@ -17,39 +17,39 @@
 
 
 const createStore = function (reducer) {
- let state = 0;
- const listeners = []; // Registered subscribers
+  let state = 0;
+  const listeners = []; // Registered subscribers
 
- return {
-   /**
+  return {
+    /**
     * Retrieves the current state of the store.
     * @returns {any} Current state.
     */
-   getState: () => state,
+    getState: () => state,
 
-   /**
+    /**
     * Dispatches an action to modify the state via the reducer.
     * Notifies all subscribed listeners after state changes.
     * @param {{ type: string }} action - Action object with a type.
     */
-   dispatch: (action) => {
-     state = reducer(state, action);
-     listeners.forEach(listener => listener());
-   },
+    dispatch: (action) => {
+      state = reducer(state, action);
+      listeners.forEach(listener => listener());
+    },
 
-   /**
+    /**
     * Subscribes a listener function that gets called on every dispatch.
     * @param {Function} listener - Function to call when state changes.
     * @returns {Function} Unsubscribe function to remove the listener.
     */
-   subscribe: (listener) => {
-     listeners.push(listener);
-     return () => {
-       const index = listeners.indexOf(listener);
-       if (index > -1) listeners.splice(index, 1);
-     };
-   }
- };
+    subscribe: (listener) => {
+      listeners.push(listener);
+      return () => {
+        const index = listeners.indexOf(listener);
+        if (index > -1) listeners.splice(index, 1);
+      };
+    }
+  };
 };
 
 export default createStore;

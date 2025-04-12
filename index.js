@@ -1,4 +1,4 @@
-"use strict"; // Enforce strict mode for better error handling and cleaner JS
+'use strict'; // Enforce strict mode for better error handling and cleaner JS
 
 // Import modules
 import reducer from './reducer.js';      // Reducer: Handles how state changes based on action
@@ -22,7 +22,7 @@ store.subscribe(() => {
   }
 });
 
-console.log(`Scenario 1:`, store.getState());    // Expect: 0 (Scenario 1)
+console.log('Scenario 1:', store.getState());    // Expect: 0 (Scenario 1)
 store.dispatch(actions.add());                   // Expect: 1 (Scenario 2, but will not print)
 store.dispatch(actions.add());                   // Expect: 2 (Scenario 2)
 store.dispatch(actions.subtract());              // Expect: 1 (Scenario 3)
