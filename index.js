@@ -6,52 +6,6 @@
 
 "use strict";
 
-/*------------------------------------ Redux-Like Core --------------------------------------------------*/
-
-// Reducer: handles state transitions
-function reducer(state, action) {
-  switch (action.type) {
-    case 'ADD':
-      return state + 1;
-    case 'SUBTRACT':
-      return state - 1;
-    case 'RESET':
-      return 0;
-    default:
-      return state;
-  }
-}
-
-// Action Creators
-const actions = {
-  add: () => ({ type: 'ADD' }),
-  subtract: () => ({ type: 'SUBTRACT' }),
-  reset: () => ({ type: 'RESET' }),
-};
-
-// Store Factory
-const createStore = function (reducer) {
-  let state = 0;
-  const listeners = []; // Stores all subscriber callbacks (e.g., UI updates)
-
-  return {
-    getState: () => state,
-
-    dispatch: (action) => {
-      state = reducer(state, action);
-      listeners.forEach(listener => listener()); // Notify all subscribers
-    },
-    
-    // Register subscriber
-    subscribe: (listener) => {
-        listeners.push(listener);
-        return () => {
-            const index = listeners.indexOf(listener);
-            if (index > -1) listeners.splice(index, 1);
-          }} 
-  };
-};
-
 // Initialize Store
 const store = createStore(reducer);
 
@@ -85,6 +39,8 @@ store.dispatch(actions.subtract()); // Scenario 3: Expect counter to be 1
 
 // Simulates pressing "Reset"
 store.dispatch(actions.reset());   // Scenario 4: Expect counter to be 0
+
+
 
 /*---------------------------------------- UI Layer -----------------------------------------------------*/
 
