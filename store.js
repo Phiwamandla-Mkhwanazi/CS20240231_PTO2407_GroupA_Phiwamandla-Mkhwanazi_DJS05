@@ -1,17 +1,15 @@
-// Store Factory
 const createStore = function (reducer) {
     let state = 0;
-    const listeners = []; // Stores all subscriber callbacks (e.g., UI updates)
+    const listeners = []; 
   
     return {
       getState: () => state,
   
       dispatch: (action) => {
         state = reducer(state, action);
-        listeners.forEach(listener => listener()); // Notify all subscribers
+        listeners.forEach(listener => listener()); 
       },
       
-      // Register subscriber
       subscribe: (listener) => {
           listeners.push(listener);
           return () => {
@@ -21,4 +19,4 @@ const createStore = function (reducer) {
     };
   };
 
-  export default createStore;
+export default createStore;

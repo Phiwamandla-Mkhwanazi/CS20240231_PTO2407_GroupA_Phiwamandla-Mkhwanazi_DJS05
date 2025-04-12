@@ -1,4 +1,3 @@
-// Reducer: handles state transitions
 export default function reducer(state, action) {
     switch (action.type) {
       case 'ADD':

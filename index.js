@@ -1,48 +1,26 @@
-/**
- * Minimal custom Redux-like implementation with a basic UI.
- * This is a foundational model to build upon without using external libraries.
- * The goal is to enhance core understanding before layering more complex designs.
- */
+"use strict"; //Enforce strict rules
 
+import reducer from './reducer.js';     //Import Module Reducer
+import actions from './actions.js';     //Import Module Actions
+import createStore from './store.js';   //Import Module Store
 
-//Imports
-import reducer from './reducer.js';
-import actions from './actions.js';
-import createStore from './store.js';
-
-"use strict";
-
-// Initialize Store
-const store = createStore(reducer);
-
-/*------------------------------------ User Stories (Test Scenarios) ------------------------------------*/
-
-// Counter for tracking which scenario we're in (for demonstration/logging purposes)
 let scenarioCount = 1;
+const store = createStore(reducer);    
 
-// Log initial state as Scenario 1
-console.log(`Scenario 1:`, store.getState());
-// Subscriber to log state changes after each action dispatch (used in test scenarios)
+
 store.subscribe(() => {
     if (scenarioCount === 1) {
-      // For Scenario 2,Simulates pressing "Add" once but will not log.
+
       scenarioCount++
     } else {
-      // For all subsequent scenarios, log with the scenario count
+ 
       console.log(`Scenario ${scenarioCount++}:`, store.getState());
     }
   });
 
-// === The user story simulations using dispatch ===
-// Simulates pressing "Add" once
-store.dispatch(actions.add());     // Scenario 1: Expect counter to be 1
-
-// Simulates pressing "Add" again
-store.dispatch(actions.add());     // Scenario 2: Expect counter to be 2
-
-// Simulates pressing "Subtract"
-store.dispatch(actions.subtract()); // Scenario 3: Expect counter to be 1
-
-// Simulates pressing "Reset"
-store.dispatch(actions.reset());   // Scenario 4: Expect counter to be 0
+console.log(`Scenario 1:`, store.getState())
+store.dispatch(actions.add());   
+store.dispatch(actions.add());   
+store.dispatch(actions.subtract()); 
+store.dispatch(actions.reset());   
 
