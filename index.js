@@ -5,10 +5,7 @@ import reducer from './reducer.js';      // Reducer: Handles how state changes b
 import actions from './actions.js';      // Action creators: Produces standardized action objects
 import createStore from './store.js';    // Store factory: Custom Redux-like state manager
 
-/**
- * Scenario tracking variable for console output labeling.
- * Starts at 1 to match user story scenario numbering.
- */
+//Scenario tracking variable for console output labeling and Starts at 1 to match user story scenario numbering.
 let scenarioCount = 1;
 
 
