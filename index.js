@@ -8,6 +8,7 @@
 //Imports
 import reducer from './reducer.js';
 import actions from './actions.js';
+import createStore from './store.js';
 
 "use strict";
 

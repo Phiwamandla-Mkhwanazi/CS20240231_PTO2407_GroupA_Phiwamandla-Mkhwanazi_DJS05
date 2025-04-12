@@ -20,3 +20,5 @@ const createStore = function (reducer) {
             }} 
     };
   };
+
+  export default createStore;
