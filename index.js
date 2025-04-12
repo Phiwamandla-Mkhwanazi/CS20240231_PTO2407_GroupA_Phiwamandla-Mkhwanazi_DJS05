@@ -7,6 +7,7 @@
 
 //Imports
 import reducer from './reducer.js';
+import actions from './actions.js';
 
 "use strict";
 

@@ -4,4 +4,6 @@ const actions = {
     subtract: () => ({ type: 'SUBTRACT' }),
     reset: () => ({ type: 'RESET' }),
   };
+
+  export default actions;
   
